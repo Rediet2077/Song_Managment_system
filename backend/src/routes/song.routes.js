@@ -1,22 +1,18 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
     createSong,
-    getSongs
-}=require("../controllers/song.controller");
+    getSongs,
+    updateSong
+} = require("../controllers/song.controller");
 
 
 const authMiddleware = require("../middleware/auth.middleware");
-
 const roleMiddleware = require("../middleware/role.middleware");
 
-router.get(
-    "/",
-    getSongs
-);
 
+// Create song
 router.post(
     "/",
     authMiddleware,
@@ -24,6 +20,21 @@ router.post(
     createSong
 );
 
+
+// Get songs
+router.get(
+    "/",
+    getSongs
+);
+
+
+// Update song
+router.put(
+    "/:id",
+    authMiddleware,
+    roleMiddleware("admin"),
+    updateSong
+);
 
 
 module.exports = router;
