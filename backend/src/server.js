@@ -6,6 +6,7 @@ const app = express();
 const userRoutes = require("./routes/user.routes");
 const songRoutes = require("./routes/song.routes");
 const likeRoutes = require("./routes/like.routes");
+const historyRoutes = require("./routes/history.routes");
 
 // Middlewar
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/likes", likeRoutes);
+app.use("/api/history", historyRoutes);
 
 // Test route
 app.get("/", (req, res) => {

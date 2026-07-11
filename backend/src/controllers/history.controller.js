@@ -1,0 +1,45 @@
+const pool = require("../config/database");
+
+
+const addHistory = async(req,res)=>{
+
+    try{
+
+        const user_id = req.user.id;
+
+        const {song_id}=req.body;
+
+
+        const result = await pool.query(
+            `
+            INSERT INTO listening_history(user_id,song_id)
+            VALUES($1,$2)
+            RETURNING *
+            `,
+            [
+                user_id,
+                song_id
+            ]
+        );
+
+
+        res.status(201).json({
+            message:"Listening history saved",
+            history:result.rows[0]
+        });
+
+
+    }catch(error){
+
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
+
+};
+
+
+module.exports={
+    addHistory
+};
