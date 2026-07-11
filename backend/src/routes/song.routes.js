@@ -4,7 +4,8 @@ const router = express.Router();
 const {
     createSong,
     getSongs,
-    updateSong
+    updateSong,
+    deleteSong
 } = require("../controllers/song.controller");
 
 
@@ -36,5 +37,10 @@ router.put(
     updateSong
 );
 
-
+router.delete(
+    "/:id",
+    authMiddleware,
+    roleMiddleware("admin"),
+    deleteSong
+);
 module.exports = router;

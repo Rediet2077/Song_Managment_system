@@ -144,8 +144,46 @@ const updateSong = async (req,res)=>{
 
 };
 
+const deleteSong = async (req,res)=>{
+
+    try{
+
+        const {id} = req.params;
+
+
+        const result = await pool.query(
+            "DELETE FROM songs WHERE id=$1 RETURNING *",
+            [id]
+        );
+
+
+        if(result.rows.length === 0){
+
+            return res.status(404).json({
+                message:"Song not found"
+            });
+
+        }
+
+
+        res.json({
+            message:"Song deleted successfully",
+            song:result.rows[0]
+        });
+
+
+    }catch(error){
+
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
+
+};
 module.exports={
     createSong,
     getSongs,
-    updateSong
+    updateSong,
+    deleteSong  
 };
