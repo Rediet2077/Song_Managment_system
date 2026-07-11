@@ -4,13 +4,14 @@ require("dotenv").config();
 
 const app = express();
 const userRoutes = require("./routes/user.routes");
+const songRoutes = require("./routes/song.routes");
 
-// Middleware
+// Middlewar
 app.use(express.json());
 app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
-
+app.use("/api/songs", songRoutes);
 
 // Test route
 app.get("/", (req, res) => {
